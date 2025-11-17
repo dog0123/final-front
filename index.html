@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digimoncho - La Batalla</title>
+
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>DIGIMONCHO</h1>
+            <p>Elegí tu camino</p>
+        </header>
+
+        <div class="equipos-container">
+            <div id="card-luz" data-equipo="luz" class="card-equipo card-luz"> 
+                <div class="text-center">
+                    <span role="img" aria-label="Sol">☀️</span>
+                    <h2>LUZ</h2>
+                    <p>Sos buenito</p>
+                </div>
+            </div>
+
+            <div id="card-sombra" data-equipo="sombra" class="card-equipo card-sombra">
+                <div class="text-center">
+                    <span role="img" aria-label="Luna y Estrella">🌙</span>
+                    <h2>SOMBRA</h2>
+                    <p>Sos malito</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <button id="start-button" disabled class="start-button">
+                A Fajarse!
+            </button>
+            <p id="status-message">Selecciona LUZ o SOMBRA. Para continuar hacé clic en el botón.</p>
+        </div>
+
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>

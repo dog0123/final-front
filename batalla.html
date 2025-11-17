@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digimoncho - La Batalla</title>
+    
+    <link rel="stylesheet" href="css/batalla.css">
+</head>
+<body>
+    <div id="loading-overlay">
+        Cargando datos de los Digimones
+    </div>
+    
+    <!-- UI ventana final de la batalla -->
+    <div id="modal-overlay">
+        <div id="modal-content">
+            <h3 id="modal-title"></h3>
+            <p id="modal-message"></p>
+            <button class="btn-restart" onclick="jugarDeNuevo()">Jugar de Nuevo</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>DIGIMONCHO BATTLE</h1>
+        <p>Gana el mejor de 3</p>
+    </header>
+
+    <main id="game-container">
+        <!-- computadora -->
+        <section id="cpu-panel" class="equipo-panel">
+            <h2 class="title-equipo">Computadora (<span id="cpu-equipo-display">...</span>)</h2>
+            <div id="cpu-score" class="score">Puntuación: 0</div>
+            <div id="cpu-cards" class="card-row">
+                </div>
+            <p id="cpu-status" class="status-message">Esperando a que juegues...</p>
+        </section>
+        <!-- humano -->
+        <section id="player-panel" class="equipo-panel">
+            <h2 class="title-equipo">Tus Cartas (<span id="player-equipo-display">...</span>)</h2>
+            <div id="player-score" class="score">Puntuación: 0</div>
+            <div id="player-cards" class="card-row">
+                </div>
+            <p id="player-status" class="status-message">Te toca. Da vuelta una carta.</p>
+        </section>
+
+    </main>
+    
+    <script src="js/batalla.js"></script>
+</body>
+</html>

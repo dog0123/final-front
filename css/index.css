@@ -1,0 +1,160 @@
+    /* --- Variables de Color (Corregidas) --- */
+    :root {
+        --color-bg-main: #0F172A; /* Color oscuro para el fondo*/
+        --color-luz: #FCD34D; /* Color claro para equipo luz */
+        --color-sombra: #111827; /* Color oscuro para equipo sombra*/
+        --color-accent-blue: #3B82F6; /* Azul Claro*/
+        --color-text-dark: #1F2937; /* Texto oscuro */
+        --color-text-light: #F9FAFB;/*texto clasro*/
+    }
+
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: var(--color-bg-main);
+        color: var(--color-text-light);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        width: 100%;
+        padding: 24px;
+        text-align: center;
+    }
+
+    /* --- Encabezado (Titulo) --- */
+    .header {
+        margin-bottom: 48px;
+    }
+
+    .header h1 {
+        font-size: 3rem; /* seria 48px */
+        font-weight: 800;
+        color: var(--color-luz);
+        letter-spacing: 0.05em;
+        margin: 0 0 8px 0;
+    }
+
+    .header p {
+        font-size: 1.25rem; /* 20px */
+        color: #9CA3AF;
+    }
+
+    /* --- Contenedor para elegir Equipos --- */
+    .equipos-container {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+
+    @media (min-width: 768px) {
+        .factions-container {
+            flex-direction: row;
+        }
+    }
+
+    /* --- Tarjetas para elegir Equipo --- */
+    .card-equipo {
+        flex-basis: 50%;
+        padding: 32px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        cursor: pointer;
+        border: 4px solid transparent;
+    }
+
+    .card-luz {
+        background-color: white;
+        color: var(--color-text-dark);
+    }
+
+    .card-sombra {
+        background-color: var(--color-sombra);
+        color: var(--color-text-light);
+    }
+
+    .card-equipo:hover {
+        transform: scale(1.03);
+    }
+
+    
+    .card-equipo span {
+        font-size: 4rem; /* 64px */
+    }
+
+    .card-equipo h2 {
+        font-size: 1.875rem; /* 30px */
+        font-weight: bold;
+        margin-top: 16px;
+    }
+
+    .card-luz h2 {
+        color: var(--color-luz);
+    }
+
+    .card-sombra h2 {
+        color: var(--color-accent-blue);
+    }
+
+    .card-equipo p {
+        margin-top: 8px;
+        font-size: 0.875rem; /* 14px */
+    }
+    .card-sombra p {
+        color: #9CA3AF;
+    }
+
+
+    /* --- Resaltar seleccion de Equipo --- */
+    .selected-luz {
+        border-color: var(--color-luz) !important;
+        box-shadow: 0 0 25px rgba(252, 211, 77, 0.7); /* Sombra de neón amarillo */
+    }
+
+    .selected-sombra {
+        border-color: var(--color-accent-blue) !important;
+        box-shadow: 0 0 25px rgba(59, 130, 246, 0.7); /* Sombra de neón azul */
+    }
+
+    /* --- Boton empezar --- */
+    .start-button {
+        background-color: #6B7280;
+        color: white;
+        font-weight: 600;
+        padding: 12px 32px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.15s;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Si hay Equipo seleccionado  */
+    .start-button:not([disabled]) {
+        background-color: var(--color-accent-blue);
+    }
+    .start-button:not([disabled]):hover {
+        background-color: #2563EB;
+    }
+
+    /* Si NO hay equipo seleccionado */
+    .start-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* --- Mensaje  debajo del boton de empezar --- */
+    #status-message {
+        margin-top: 16px;
+        font-size: 0.875rem;
+        color: #9CA3AF;
+    }
