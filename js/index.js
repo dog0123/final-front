@@ -6,7 +6,7 @@
         let equipoElegido = ''; 
         const claveDeLaSeleccion = 'eleccionJugador'; 
 
-        // --- Logica de Selección ---
+        // Logica de Selección
         function seleccionarEquipo(equipo) { 
             equipoElegido = equipo; 
             
@@ -26,7 +26,7 @@
             mensajeEstado.textContent = `Seleccionaste el equipo ${equipo.toUpperCase()}. ¡A fajarse!`;
         }
 
-        // --- Eventos ---
+        // Eventos
         cardLuz.addEventListener('click', () => seleccionarEquipo('luz'));
         cardSombra.addEventListener('click', () => seleccionarEquipo('sombra'));
 
@@ -40,7 +40,7 @@
             }
         });
 
-        // --- Chusmear si ya hay una seleccion guardada ---
+        // Chusmear si ya hay una seleccion guardada
         const seleccionQueYaExistia = localStorage.getItem(claveDeLaSeleccion); 
         if (seleccionQueYaExistia) {
             seleccionarEquipo(seleccionQueYaExistia); 

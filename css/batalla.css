@@ -1,341 +1,298 @@
-    /* --- Variables de Color  --- */
-    :root {
-        --color-bg-main: #111827; /* Fondo principal bien oscuro  */
-        --color-dark: #1F2937; /* Gris Oscuro/Negro */
-        --color-light-accent: #FCD34D;
-        --color-blue-accent: #3B82F6;
-        --color-light-panel: #FEF9C3;
-        --color-text-light: #F9FAFB;
-        --color-text-dark: #1F2937;
-        --color-win: #10B981; /* Verde gano */
-        --color-lose: #EF4444; /* Rojo perdio */
-    }
+/*  Variables de Color   */
+:root {
+    --color-bg-main: #111827; /* Fondo principal bien oscuro  */
+    --color-dark: #1F2937; /* Gris Oscuro/Negro */
+    --color-light-accent: #FCD34D;
+    --color-blue-accent: #3B82F6;
+    --color-light-panel: #FEF9C3;
+    --color-text-light: #F9FAFB;
+    --color-text-dark: #1F2937;
+    --color-win: #10B981; /* Verde gano */
+    --color-lose: #EF4444; /* Rojo perdio */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-bg-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    color: var(--color-text-light);
+}
+
+/*  Contenedor Principal (Split Horizontal)  */
+#game-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-around;
+}
+
+.equipo-panel {
+    min-height: 45vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    transition: background-color 0.5s ease, border 0.5s ease;
+    text-align: center;
+    color: var(--color-text-light);
+}
+
+.equipo-panel h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.1rem;
+}
+
+.equipo-panel .score {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Mensajes de estado */
+.status-message {
+    margin-top: 1rem;
+    color: #9CA3AF;
+    font-size: 0.875rem;
+    font-style: italic;
+    height: 1.5rem;
+}
+
+/*  Contenedor de carga  */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    color: var(--color-light-accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    z-index: 1000;
+}
+
+/*  Contenedor de Modal  */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+#modal-content {
+    background-color: var(--color-dark);
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    max-width: 90%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+#modal-content.visible {
+    transform: scale(1);
+}
+
+.modal-win { border: 4px solid var(--color-win); color: var(--color-win); }
+.modal-lose { border: 4px solid var(--color-lose); color: var(--color-lose); }
+.modal-tie { border: 4px solid var(--color-light-accent); color: var(--color-light-accent); }
+
+#modal-content h3 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#modal-content p {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-restart {
+    background-color: var(--color-blue-accent);
+    color: var(--color-text-light);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-restart:hover {
+    background-color: #316be6;
+    transform: translateY(-2px);
+}
+
+/*  Contenedor de Cartas (Fila)  */
+.card-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    min-height: 180px;
+}
+
+/*  Diseño de la Carta  */
+.card-slot {
+    width: 120px;
+    height: 170px;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    user-select: none;
+    transition: transform 0.5s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+/* Lado frontal y trasero */
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.75rem;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 3px solid;
+}
+
+/* Lado trasero (D) */
+.card-back {
+    background-color: var(--color-dark);
+    border-color: var(--color-light-accent);
+    font-size: 2rem;
+    color: var(--color-light-accent);
+    justify-content: center;
+    transform: rotateY(180deg);
+}
+
+/* Lado frontal */
+.card-front {
+    background-color: white;
+    color: var(--color-text-dark);
+    border-color: #4B5563;
+    font-size: 0.85rem;
+    transform: rotateY(0deg);
+}
+
+/* Giro de carta */
+.card-flipped {
+    transform: rotateY(180deg);
+}
+
+/* Imagen de carta */
+.card-image {
+    width: 90%;
+    max-height: 80px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* Stats */
+.card-power { font-weight: bold; font-size: .75rem; }
+.card-name { font-weight: 600; }
+
+/* Hover solo para cartas no jugadas */
+#player-cards .card-slot:not(.jugada) {
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+#player-cards .card-slot:not(.jugada):hover {
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Carta jugada */
+.card-slot.jugada {
+    opacity: 0.8;
+    cursor: default !important;
+    transform: none !important;
+}
+
+/* Resultado del round */
+.round-win { border: 4px solid var(--color-win) !important; box-shadow: 0 0 15px var(--color-win); }
+.round-lose { border: 4px solid var(--color-lose) !important; box-shadow: 0 0 15px var(--color-lose); }
 
 
-    body {
-        font-family: Arial, sans-serif;
-        background-color: var(--color-bg-main);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        margin: 0;
-        color: var(--color-text-light);
-    }
+.card-slot.is-luz .card-back {
+    background-color: var(--color-light-panel);
+    border-color: var(--color-light-accent);
+    color: var(--color-dark);
+}
 
-    /* --- Encabezado Titulo--- */
-    header {
-        padding: 1rem;
-        background-color: var(--color-dark);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        border-bottom: 3px solid var(--color-light-accent);
-        text-align: center;
-    }
+.card-slot.is-sombra .card-back {
+    background-color: var(--color-dark);
+    border-color: var(--color-blue-accent);
+    color: var(--color-blue-accent);
+}
 
-    header h1 {
-        font-size: 2rem;
-        font-weight: 800;
-        color: var(--color-light-accent);
-        letter-spacing: 0.05em;
-        margin: 0;
-    }
+/* Panel del jugador / CPU */
+#player-panel.is-luz, #cpu-panel.is-luz {
+    background-color: var(--color-light-panel);
+    color: var(--color-text-dark);
+}
+#player-panel.is-luz h2, #player-panel.is-luz .score,
+#cpu-panel.is-luz h2, #cpu-panel.is-luz .score {
+    color: var(--color-dark);
+}
+#player-panel.is-luz .status-message, #cpu-panel.is-luz .status-message {
+    color: #4B5563;
+}
 
-    header p {
-        font-size: 0.875rem;
-        color: #9CA3AF;
-        margin-top: 0.25rem;
-    }
+#player-panel.is-sombra, #cpu-panel.is-sombra {
+    background-color: var(--color-dark);
+    color: var(--color-text-light);
+}
+#player-panel.is-sombra h2, #player-panel.is-sombra .score,
+#cpu-panel.is-sombra h2, #cpu-panel.is-sombra .score {
+    color: var(--color-text-light);
+}
+#player-panel.is-sombra .status-message, #cpu-panel.is-sombra .status-message {
+    color: #9CA3AF;
+}
 
-    /* --- Contenedor Principal (Split Horizontal) --- */
-    #game-container {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1; /* Ocupa el espacio restante */
-        justify-content: space-around;
-    }
-
-    .equipo-panel {
-        min-height: 45vh; 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 1.5rem 1rem;
-        transition: background-color 0.5s ease, border 0.5s ease;
-        text-align: center;
-        color: var(--color-text-light);
-    }
-
-    .equipo-panel h2 {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-    }
-
-    .equipo-panel .score {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        background-color: rgba(0, 0, 0, 0.2);
-    }
-
-    /* Mensajes de estado */
-    .status-message {
-        margin-top: 1rem; 
-        color: #9CA3AF; 
-        font-size: 0.875rem; 
-        font-style: italic;
-        height: 1.5rem; /* Asegurar espacio */
-    }
-
-    /* Contenedor de carga */
-    #loading-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        color: var(--color-light-accent);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        font-size: 1.5rem;
-        z-index: 1000;
-    }
-
-    /* Contenedor de Modal */
-    #modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: none; /* Inicia oculto */
-        justify-content: center;
-        align-items: center;
-        z-index: 2000;
-    }
-
-    #modal-content {
-        background-color: var(--color-dark);
-        padding: 2rem;
-        border-radius: 1rem;
-        text-align: center;
-        max-width: 90%;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-        transform: scale(0.9);
-        transition: transform 0.3s ease;
-    }
-
-    #modal-content.visible {
-        transform: scale(1);
-    }
-
-    .modal-win { border: 4px solid var(--color-win); color: var(--color-win); }
-    .modal-lose { border: 4px solid var(--color-lose); color: var(--color-lose); }
-    .modal-tie { border: 4px solid var(--color-light-accent); color: var(--color-light-accent); }
-
-    #modal-content h3 {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    #modal-content p {
-        font-size: 1.25rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .btn-restart {
-        background-color: var(--color-blue-accent);
-        color: var(--color-text-light);
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.2s, transform 0.1s;
-    }
-
-    .btn-restart:hover {
-        background-color: #316be6;
-        transform: translateY(-2px);
-    }
-
-    /* --- Contenedor de Cartas (Fila) --- */
-    .card-row {
-        display: flex;
-        gap: 1rem; /* Espacio entre cartas */
-        justify-content: center;
-        min-height: 180px; /* Asegura el espacio para las cartas */
-    }
-
-    /* --- Diseño de la Carta --- */
-    .card-slot {
-        width: 120px;
-        height: 170px;
-        border-radius: 0.75rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-        text-align: center;
-        user-select: none;
-        transition: transform 0.5s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
-        position: relative; /* Para la animación de flip */
-        transform-style: preserve-3d;
-    }
-
-    /* Lado frontal (contenido revelado) */
-    .card-front, .card-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: 0.75rem;
-        backface-visibility: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-        padding: 8px;
-        box-sizing: border-box;
-        border: 3px solid;
-        transition: background-color 0.2s;
-    }
-
-    /* Lado de la carta boca abajo (trasera) */
-    .card-back {
-        background-color: var(--color-dark);
-        border-color: var(--color-light-accent);
-        font-size: 2rem;
-        color: var(--color-light-accent);
-        justify-content: center;
-        /* Inicia girada para que al no tener .card-flipped se vea la cara */
-        transform: rotateY(180deg); 
-    }
-
-    /* Lado de la carta boca arriba (frontal) */
-    .card-front {
-        background-color: white; 
-        color: var(--color-text-dark);
-        border-color: #4B5563;
-        font-size: 0.85rem;
-        /* Inicia sin girar */
-        transform: rotateY(0deg); 
-    }
-
-    /* Clase para "dar la vuelta" a la carta (muestra la espalda/D) */
-    .card-flipped {
-        transform: rotateY(180deg); 
-    }
-
-    /* Estilo de imagen dentro de la carta */
-    .card-image {
-        width: 90%;
-        max-height: 80px;
-        object-fit: contain;
-        border-radius: 4px;
-        margin-bottom: 4px;
-        margin-top: 4px;
-    }
-
-    .card-power {
-        font-weight: bold;
-        font-size: 1.1rem;
-        margin-top: 4px;
-    }
-
-    .card-name {
-        font-weight: 600;
-    }
-
-    /* CORRECCIÓN HOVER: Solo cursor y sombra sin transform */
-    #player-cards .card-slot:not(.jugada) {
-        cursor: pointer;
-        transition: box-shadow 0.2s;
-    }
-
-    #player-cards .card-slot:not(.jugada):hover {
-        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.6); 
-    }
-    /* FIN CORRECCIÓN HOVER */
-
-    /* Carta jugada/deshabilitada */
-    .card-slot.jugada {
-        opacity: 0.8;
-        cursor: default !important;
-        transform: none !important;
-    }
-
-    /* Resultado del round (Contorno permanente) */
-    .round-win { border: 4px solid var(--color-win) !important; box-shadow: 0 0 15px var(--color-win); }
-    .round-lose { border: 4px solid var(--color-lose) !important; box-shadow: 0 0 15px var(--color-lose); }
-
-    /* --- ESTILOS DE CARTA BASADOS EN LA FACCIÓN (DORSO) --- */
-    /* Nota: 'is-luz' e 'is-sombra' se mantienen en CSS y JS, pero ahora representan el equipo */
-    .card-slot.is-luz .card-back {
-        background-color: var(--color-light-panel); /* Amarillo claro */
-        border-color: var(--color-light-accent);
-        color: var(--color-dark); /* Texto oscuro para el 'D' */
-    }
-
-    .card-slot.is-sombra .card-back {
-        background-color: var(--color-dark); /* Gris Oscuro */
-        border-color: var(--color-blue-accent);
-        color: var(--color-blue-accent); /* Azul para el 'D' */
-    }
-
-    /* --- Clases de equipoes Dinámicas (Aplicadas por JS) --- */
-
-    /* Panel LUZ: Usando ID para máxima especificidad */
-    #player-panel.is-luz, #cpu-panel.is-luz {
-        background-color: var(--color-light-panel); 
-        color: var(--color-text-dark);
-    }
-    #player-panel.is-luz h2, #player-panel.is-luz .score, 
-    #cpu-panel.is-luz h2, #cpu-panel.is-luz .score {
-        color: var(--color-dark);
-    }
-    #player-panel.is-luz .status-message, #cpu-panel.is-luz .status-message {
-        color: #4B5563;
-    }
-
-    /* Panel SOMBRA: Usando ID para máxima especificidad */
-    #player-panel.is-sombra, #cpu-panel.is-sombra {
-        background-color: var(--color-dark); 
-        color: var(--color-text-light); 
-    }
-    #player-panel.is-sombra h2, #player-panel.is-sombra .score,
-    #cpu-panel.is-sombra h2, #cpu-panel.is-sombra .score {
-        color: var(--color-text-light);
-    }
-    #player-panel.is-sombra .status-message, #cpu-panel.is-sombra .status-message {
-        color: #9CA3AF;
-    }
+/* Bordes del split */
+.player-is-sombra { border-bottom: 4px solid var(--color-blue-accent); }
+.cpu-is-sombra { border-top: 4px solid var(--color-blue-accent); }
+.player-is-luz { border-bottom: 4px solid var(--color-light-accent); }
+.cpu-is-luz { border-top: 4px solid var(--color-light-accent); }
 
 
-    /* Bordes para la división horizontal */
-    .player-is-sombra { border-bottom: 4px solid var(--color-blue-accent); }
-    .cpu-is-sombra { border-top: 4px solid var(--color-blue-accent); }
-    .player-is-luz { border-bottom: 4px solid var(--color-light-accent); }
-    .cpu-is-luz { border-top: 4px solid var(--color-light-accent); }
-
-    /* --- Responsividad --- */
-    @media (max-width: 640px) {
-        header h1 { font-size: 1.5rem; }
-        .equipo-panel { padding: 1rem 0.5rem; }
-        .card-row { gap: 0.5rem; }
-        .card-slot {
-            width: 100px;
-            height: 140px;
-        }
-        .card-front { font-size: 0.8rem; }
-        .card-image { max-height: 60px; }
-        .card-power { font-size: 1rem; }
-        #modal-content h3 { font-size: 2rem; }
-        #modal-content p { font-size: 1rem; }
-    }
+@media (max-width: 640px) {
+    header h1 { font-size: 1.5rem; }
+    .equipo-panel { padding: 1rem 0.5rem; }
+    .card-row { gap: 0.5rem; }
+    .card-slot { width: 100px; height: 140px; }
+    .card-front { font-size: 0.8rem; }
+    .card-image { max-height: 60px; }
+    .card-power { font-size: .75rem; }
+    #modal-content h3 { font-size: 2rem; }
+    #modal-content p { font-size: 1rem; }
+}

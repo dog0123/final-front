@@ -1,160 +1,214 @@
-    /* --- Variables de Color (Corregidas) --- */
-    :root {
-        --color-bg-main: #0F172A; /* Color oscuro para el fondo*/
-        --color-luz: #FCD34D; /* Color claro para equipo luz */
-        --color-sombra: #111827; /* Color oscuro para equipo sombra*/
-        --color-accent-blue: #3B82F6; /* Azul Claro*/
-        --color-text-dark: #1F2937; /* Texto oscuro */
-        --color-text-light: #F9FAFB;/*texto clasro*/
-    }
+/* --- Variables de Color --- */
+:root{
+    --color-bg-main: #0F172A;
+    --color-luz: #FCD34D;
+    --color-sombra: #111827;
+    --color-accent-blue: #3B82F6;
+    --color-text-dark: #1F2937;
+    --color-text-light: #F9FAFB;
+}
+
+/* --- Box sizing global (IMPORTANTE) --- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* --- Body --- */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-bg-main);
+    color: var(--color-text-light);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    overflow-y: auto; /* siempre permitir scroll si hace falta */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Contenedor principal --- */
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+}
+
+/* --- Header --- */
+.header {
+    margin-bottom: 8px;
+}
+
+.header h1 {
+    /* se adapta entre 1.6rem y 3rem según pantalla */
+    font-size: clamp(1.6rem, 6vw, 3rem);
+    font-weight: 800;
+    color: var(--color-luz);
+    letter-spacing: 0.05em;
+    margin: 0 0 8px 0;
+}
+
+.header p {
+    font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+    color: #9CA3AF;
+    margin: 0;
+}
 
 
-    body {
-        font-family: Arial, sans-serif;
-        background-color: var(--color-bg-main);
-        color: var(--color-text-light);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        padding: 20px;
-    }
+.equipos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: stretch;
+    margin-bottom: 24px;
+    width: 100%;
+}
 
-    .container {
-        max-width: 900px;
-        width: 100%;
-        padding: 24px;
-        text-align: center;
-    }
+/* --- Tarjetas de equipo --- */
+.card-equipo {
+    padding: clamp(14px, 3.5vw, 32px);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    cursor: pointer;
+    border: 4px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    min-height: 0; /* por el flexbox */
+    overflow: hidden; /* evita que contenido se salga visualmente */
+    background-clip: padding-box;
+}
 
-    /* --- Encabezado (Titulo) --- */
-    .header {
-        margin-bottom: 48px;
-    }
-
-    .header h1 {
-        font-size: 3rem; /* seria 48px */
-        font-weight: 800;
-        color: var(--color-luz);
-        letter-spacing: 0.05em;
-        margin: 0 0 8px 0;
-    }
-
-    .header p {
-        font-size: 1.25rem; /* 20px */
-        color: #9CA3AF;
-    }
-
-    /* --- Contenedor para elegir Equipos --- */
+/* en pantallas grandes */
+@media (min-width: 768px) {
     .equipos-container {
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-        justify-content: center;
-        margin-bottom: 40px;
+        flex-direction: row;
+        gap: 24px;
+        align-items: stretch;
     }
 
-    @media (min-width: 768px) {
-        .factions-container {
-            flex-direction: row;
-        }
-    }
-
-    /* --- Tarjetas para elegir Equipo --- */
     .card-equipo {
-        flex-basis: 50%;
-        padding: 32px;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-        cursor: pointer;
-        border: 4px solid transparent;
+        flex: 1 1 0; /* comparte espacio iguales */
     }
+}
 
-    .card-luz {
-        background-color: white;
-        color: var(--color-text-dark);
-    }
+.card-luz {
+    background-color: white;
+    color: var(--color-text-dark);
+}
 
-    .card-sombra {
-        background-color: var(--color-sombra);
-        color: var(--color-text-light);
-    }
+.card-sombra {
+    background-color: var(--color-sombra);
+    color: var(--color-text-light);
+}
 
-    .card-equipo:hover {
-        transform: scale(1.03);
-    }
+.card-equipo:hover {
+    transform: scale(1.03);
+}
 
-    
-    .card-equipo span {
-        font-size: 4rem; /* 64px */
-    }
-
-    .card-equipo h2 {
-        font-size: 1.875rem; /* 30px */
-        font-weight: bold;
-        margin-top: 16px;
-    }
-
-    .card-luz h2 {
-        color: var(--color-luz);
-    }
-
-    .card-sombra h2 {
-        color: var(--color-accent-blue);
-    }
-
-    .card-equipo p {
-        margin-top: 8px;
-        font-size: 0.875rem; /* 14px */
-    }
-    .card-sombra p {
-        color: #9CA3AF;
-    }
+/* emoji / icono adaptable */
+.card-equipo span {
+    font-size: clamp(2.2rem, 6vw, 4rem); /* escala con pantalla */
+    line-height: 1;
+    display: inline-block;
+}
 
 
-    /* --- Resaltar seleccion de Equipo --- */
-    .selected-luz {
-        border-color: var(--color-luz) !important;
-        box-shadow: 0 0 25px rgba(252, 211, 77, 0.7); /* Sombra de neón amarillo */
-    }
+.card-equipo h2 {
+    font-size: clamp(1.25rem, 2.6vw, 1.875rem);
+    font-weight: 700;
+    margin: 12px 0 6px 0;
+}
 
-    .selected-sombra {
-        border-color: var(--color-accent-blue) !important;
-        box-shadow: 0 0 25px rgba(59, 130, 246, 0.7); /* Sombra de neón azul */
-    }
+.card-equipo p {
+    margin: 0;
+    margin-top: 6px;
+    font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+}
 
-    /* --- Boton empezar --- */
+/* Colores específicos */
+.card-luz h2 { color: var(--color-luz); }
+.card-sombra h2 { color: var(--color-accent-blue); }
+.card-sombra p { color: #9CA3AF; }
+
+/* --- Selección de Equipo --- */
+.selected-luz {
+    border-color: var(--color-luz) !important;
+    box-shadow: 0 0 25px rgba(252,211,77,0.65);
+}
+
+.selected-sombra {
+    border-color: var(--color-accent-blue) !important;
+    box-shadow: 0 0 25px rgba(59,130,246,0.65);
+}
+
+/* --- Footer / botón --- */
+.footer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.start-button {
+    background-color: #6B7280;
+    color: white;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background-color 0.15s;
+    border: none;
+    cursor: pointer;
+    min-width: 160px;
+    width: auto;
+}
+
+@media (max-width: 420px) {
     .start-button {
-        background-color: #6B7280;
-        color: white;
-        font-weight: 600;
-        padding: 12px 32px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.15s;
-        border: none;
-        cursor: pointer;
+        width: 100%;
+        max-width: 420px;
+        padding: 12px 18px;
     }
+}
 
-    /* Si hay Equipo seleccionado  */
-    .start-button:not([disabled]) {
-        background-color: var(--color-accent-blue);
-    }
-    .start-button:not([disabled]):hover {
-        background-color: #2563EB;
-    }
+.start-button:not([disabled]) {
+    background-color: var(--color-accent-blue);
+}
 
-    /* Si NO hay equipo seleccionado */
-    .start-button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
+.start-button:not([disabled]):hover {
+    background-color: #2563EB;
+}
 
-    /* --- Mensaje  debajo del boton de empezar --- */
-    #status-message {
-        margin-top: 16px;
-        font-size: 0.875rem;
-        color: #9CA3AF;
-    }
+.start-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* mensaje de estado */
+#status-message {
+    margin-top: 0;
+    font-size: 0.9rem;
+    color: #9CA3AF;
+}
+
+/* pantallas chicas */
+@media (max-width: 360px) {
+    .container { padding: 12px; }
+    .header { margin-bottom: 12px; }
+    .equipos-container { gap: 14px; }
+    .card-equipo { padding: 12px; border-radius: 10px; }
+}
